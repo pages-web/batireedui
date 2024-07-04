@@ -1,0 +1,101 @@
+body {
+  padding: 5px 20px;
+}
+a {
+  color: #a44141;
+}
+a:hover {
+  color: #c47d7d;
+}
+
+/* Layout */
+header {
+  padding: 0px 0px;
+}
+footer {
+  border-top: solid 2px #eee;
+  padding: 10px 3px;
+  margin-top: 40px;
+}
+h1 {
+}
+h2 {
+  color: #666;
+}
+h3 {
+  color: #888;
+  font-size: 14px;
+}
+.clear {
+  clear: both;
+}
+/* Navigation */
+nav#menu {
+  height: 22px;
+  padding: 10px 3px;
+  border-top: solid 2px #eee;
+  border-bottom: solid 2px #eee;
+}
+nav#menu ul {
+  margin: 0px;
+  padding: 0px;
+}
+nav#menu ul li {
+  display: block;
+  float: left;
+  margin-right: 15px;
+}
+
+/* Articles */
+ul.article-list {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+ul.article-list li {
+  display: block;
+  float: left;  
+  margin-right: 25px;
+}
+ul.article-list li a {
+  display: block;
+  float: left;
+  width: 200px;  
+  opacity: 0.9;
+}
+ul.article-list li a:hover {
+  opacity: 1.0;
+}
+ul.article-list li a img {
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+/* Pagination */
+.pagination {
+  margin-top: 25px;
+}
+
+/* Comments */
+#comments {
+  margin-top: 30px;
+}
+#comment_form {
+  margin-top: 30px;
+}
+#comment_form input, #comment_form select {
+  width: 300px;
+}
+#comment_form textarea {
+  width: 400px;
+  height: 100px;
+}
+#comment_form p {
+  margin: 12px 0px;
+}
+#comment_form p label {
+  display: block;
+  margin-bottom: 6px;
+}
