@@ -1,14 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useState, ChangeEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Pagination from "@mui/material/Pagination";
-import PaginationItem from "@mui/material/PaginationItem";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSearch } from "../SearchContext";
+import { log } from "console";
 
-interface Post {
+export interface Post {
   id: number;
   imageUrl?: string;
   title: string;
@@ -17,106 +17,7 @@ interface Post {
   post: string;
 }
 
-export default function Home() {
-  const router = useRouter();
-
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const handleChange = (event: React.ChangeEvent<unknown>, newPage: number) => {
-    setCurrentPage(newPage);
-    router.push(`/?page=${newPage}`);
-  };
-
-  const postsPerPage = 8;
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = postList.slice(indexOfFirstPost, indexOfLastPost);
-
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <div id="content" style={{ display: "block" }}>
-        <div id="home-books">
-          <Image
-            alt=""
-            width={80}
-            height={110}
-            src="/images/book/9216242246717820242_80_x_110.png"
-          />
-          <Image
-            alt=""
-            width={80}
-            height={110}
-            src="/images/book/6425910618774315712_80_x_110.png"
-          />
-          <Image
-            alt=""
-            width={80}
-            height={110}
-            src="/images/book/7610322725513582374_80_x_110.png"
-          />
-          <Image
-            alt=""
-            width={80}
-            height={110}
-            src="/images/book/2456073702971551262_80_x_110.png"
-          />
-          <Image
-            alt=""
-            width={80}
-            height={110}
-            src="/images/book/5337497365961638776_80_x_110.png"
-          />
-          <Image
-            alt=""
-            width={80}
-            height={110}
-            src="/images/book/4526717844309056618_80_x_110.png"
-          />
-        </div>
-        <div className="clear" />
-        <div className="pagination">
-          <div className="post_list">
-            {currentPosts.map((post) => (
-              <div key={post.id} className="post_intro">
-                {/* Your post item structure */}
-
-                <Link href={post.link}>
-                  {post.imageUrl && (
-                    <Image
-                      alt={post.title}
-                      src={post.imageUrl}
-                      width={300}
-                      height={200}
-                    />
-                  )}
-                  <h2>{post.title}</h2>
-                </Link>
-                <div className="post_info">{post.post}</div>
-
-                <div className="post_content">{post.content}</div>
-              </div>
-            ))}
-            <div className="dot-border-bottom-full" />
-            {/* Pagination component */}
-          </div>
-        </div>
-      </div>
-      <Pagination
-        count={Math.ceil(postList.length / postsPerPage)} // Total number of pages
-        page={currentPage}
-        onChange={handleChange}
-        shape="rounded"
-        color="primary"
-      />
-    </div>
-  );
-}
-const postList: Post[] = [
+export const postList: Post[] = [
   {
     id: 1,
     imageUrl: "/images/thumb_sample.jpg",
@@ -557,3 +458,111 @@ const postList: Post[] = [
       "Санаа алдахад нь Санаашраад догдлоно чинээ бодсонгүй,Салаад унахад ньСалхинд хийснэ чинээ санасангүй.Бороо минь чи түүн дээр бүү дусДуслыг чинь тэр даахгүй, хүнддэнэ.Салхи минь чи түүнийг бүү сэв,Сэвшээг тэнь тэр тэвчихгүй, ...",
   },
 ];
+
+export default function Home() {
+  const router = useRouter();
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { searchTerm } = useSearch();
+
+  const filteredPosts = postList.filter(
+    (post) =>
+      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      post.content.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const postsPerPage = 8;
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = filteredPosts.slice(
+    indexOfFirstPost,
+    indexOfFirstPost + postsPerPage
+  );
+
+  const handleChange = (event: React.ChangeEvent<unknown>, newPage: number) => {
+    setCurrentPage(newPage);
+    router.push(`/?page=${newPage}`);
+  };
+
+  const noResults = filteredPosts.length === 0 && searchTerm !== "";
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <div id="content" style={{ display: "block" }}>
+        <div id="home-books">
+          <Image
+            alt=""
+            width={80}
+            height={110}
+            src="/images/book/9216242246717820242_80_x_110.png"
+          />
+          <Image
+            alt=""
+            width={80}
+            height={110}
+            src="/images/book/6425910618774315712_80_x_110.png"
+          />
+          <Image
+            alt=""
+            width={80}
+            height={110}
+            src="/images/book/7610322725513582374_80_x_110.png"
+          />
+          <Image
+            alt=""
+            width={80}
+            height={110}
+            src="/images/book/2456073702971551262_80_x_110.png"
+          />
+          <Image
+            alt=""
+            width={80}
+            height={110}
+            src="/images/book/5337497365961638776_80_x_110.png"
+          />
+          <Image
+            alt=""
+            width={80}
+            height={110}
+            src="/images/book/4526717844309056618_80_x_110.png"
+          />
+        </div>
+        <div className="clear" />
+
+        {noResults ? (
+          <div>Таны хайлтанд тохирох зүйл олдсонгүй.</div>
+        ) : (
+          <div className="pagination">
+            <div className="post_list">
+              {currentPosts.map((post) => (
+                <div key={post.id} className="post_intro">
+                  <Link href={post.link}>
+                    {post.imageUrl && (
+                      <Image
+                        alt={post.title}
+                        src={post.imageUrl}
+                        width={300}
+                        height={200}
+                      />
+                    )}
+                    <h2>{post.title}</h2>
+                  </Link>
+                  <div className="post_info">{post.post}</div>
+                  <div className="post_content">{post.content}</div>
+                </div>
+              ))}
+              <div className="dot-border-bottom-full" />
+            </div>
+          </div>
+        )}
+      </div>
+      <Pagination
+        count={Math.ceil(filteredPosts.length / postsPerPage)}
+        page={currentPage}
+        onChange={handleChange}
+        shape="rounded"
+        color="primary"
+      />
+    </div>
+  );
+}

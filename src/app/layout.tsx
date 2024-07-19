@@ -4,6 +4,7 @@ import Header from "@/component/header/page";
 import Footer from "@/component/footer/page";
 import Sidebar from "@/component/sidebar/page";
 import Image from "next/image";
+import { SearchProvider } from "@/component/SearchContext";
 // import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -34,32 +35,34 @@ export default function RootLayout({
         <link rel="stylesheet" href="/static/css/gerege/gerege.css" /> */}
       </head>
       <body className={inter.className}>
-        <Header />
-        <div
-          className="fixed"
-          style={{
-            width: 1000,
-            height: 69,
-            display: "flex",
-            justifyContent: "center",
-            marginBottom: "10px",
-          }}
-        >
-          <Image alt="" width={550} height={69} src="/images/logo.jpg" />
-        </div>
+        <SearchProvider>
+          <Header />
+          <div
+            className="fixed"
+            style={{
+              width: 1000,
+              height: 69,
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "10px",
+            }}
+          >
+            <Image alt="" width={550} height={69} src="/images/logo.jpg" />
+          </div>
 
-        <div
-          id="wrapper"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          {children}
-          <Sidebar />
-        </div>
+          <div
+            id="wrapper"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            {children}
+            <Sidebar />
+          </div>
 
-        <Footer />
+          <Footer />
+        </SearchProvider>
       </body>
       <script src="/static/js/scripts.js" async />
       <script src="/static/js/cufon/cufon-arial.js" async />

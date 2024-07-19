@@ -1,6 +1,8 @@
-import React from "react";
+"use client";
+import React, { useState, ChangeEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useSearch } from "../SearchContext";
 
 declare module "react" {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
@@ -9,6 +11,15 @@ declare module "react" {
 }
 
 export default function Header() {
+  const { setSearchTerm } = useSearch();
+
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+  const handleSearchClick = () => {
+    handleSearchChange;
+  };
+
   return (
     <div id="header-wrapper" style={{ marginBottom: "20px" }}>
       <div className="fixed" style={{ width: "1100px" }}>
@@ -38,19 +49,21 @@ export default function Header() {
               </Link>
             </li>
           </ul>
-        </div>{" "}
-        {/* End #Menu */}
+        </div>
         <div className="search_container right">
           <input
             id="search"
             type="text"
             className="left watermark"
-            fdprocessedid="usxdps"
+            // value={searchTerm}
+            onChange={handleSearchChange}
           />
-          <div className="search_btn left">Хайх</div>
+          <div className="search_btn left" onClick={handleSearchClick}>
+            Хайх
+          </div>
           <div className="clear" />
-        </div>{" "}
-        {/* End #Search */}
+        </div>
+
         <div className="top-social right">
           <Link href="http://twitter.com/Iregedui" target="blank">
             <Image
@@ -84,10 +97,8 @@ export default function Header() {
               height={28}
             />
           </Link>
-        </div>{" "}
-        {/* End #Search */}
-      </div>{" "}
-      {/* End .Fixed */}
+        </div>
+      </div>
     </div>
   );
 }
