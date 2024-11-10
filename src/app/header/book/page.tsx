@@ -2,9 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import Pagination from "@mui/material/Pagination";
-import PaginationItem from "@mui/material/PaginationItem";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
@@ -31,42 +29,46 @@ export default function Page() {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = postList.slice(indexOfFirstPost, indexOfLastPost);
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <div id="content" style={{ display: "block" }}>
-        <div className="pagination">
-          <div className="post_list">
-            {currentPosts.map((post) => (
-              <div key={post.id} id="book" className="post_intro">
-                {/* Your post item structure */}
+    <>
+      <head>
+        <title>Миний номнууд | Бат-Ирээдүй</title>
+        <link rel="icon" href="/images/favicon.ico" />
+      </head>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <div id="content" style={{ display: "block" }}>
+          <div className="pagination">
+            <div className="post_list">
+              {currentPosts.map((post) => (
+                <div key={post.id} id="book" className="post_intro">
+                  {/* Your post item structure */}
 
-                {post.imageUrl && (
-                  <Image
-                    alt={post.title}
-                    src={post.imageUrl}
-                    width={180}
-                    height={247}
-                  />
-                )}
-                <h2>{post.title}</h2>
-                <div id="book" className="post_content">
-                  {post.content}
+                  {post.imageUrl && (
+                    <Image
+                      alt={post.title}
+                      src={post.imageUrl}
+                      width={180}
+                      height={247}
+                    />
+                  )}
+                  <h2>{post.title}</h2>
+                  <div id="book" className="post_content">
+                    {post.content}
+                  </div>
+                  <div className="print">price {post.price}</div>
                 </div>
-                <div className="print">{post.price}</div>
-              </div>
-            ))}
-            <div className="dot-border-bottom-full" />
-            {/* Pagination component */}
+              ))}
+              <div className="dot-border-bottom-full" />
+              {/* Pagination component */}
+            </div>
           </div>
         </div>
+        <Pagination
+          count={Math.ceil(postList.length / postsPerPage)} // Total number of pages
+          page={bookCurrentPage}
+          onChange={handleChange}
+        />
       </div>
-      <Pagination
-        count={Math.ceil(postList.length / postsPerPage)} // Total number of pages
-        page={bookCurrentPage}
-        onChange={handleChange}
-        shape="rounded"
-        color="primary"
-      />
-    </div>
+    </>
   );
 }
 
@@ -340,10 +342,10 @@ const postList: Post[] = [
     id: 32,
     imageUrl: "/images/book/7239591283736064459_180_x_247.png",
 
-    title: "МОНГОЛ ХЭЛНИЙ СОНСОХ ДАДЛАГА“",
+    title: "МОНГОЛ ХЭЛНИЙ СОНСОХ ДАДЛАГА",
     price: "2009",
     content:
-      " Энэхүү “Монгол хэлний сонсох дадлага” I, II номыг Монгол хэл сурч байгаа гадаадын хүмүүст зориулсан. Тэр тусмаа дундаас дээш бүр дээд шатны хүмүүсийн&nbsp;хэлний мэдлэг, сонсох чадвараа сайжруулахад зориулсан юм. Энэ номын нэгдүгээр дэвтэрт ...",
+      " Энэхүү “Монгол хэлний сонсох дадлага” I, II номыг Монгол хэл сурч байгаа гадаадын хүмүүст зориулсан. ",
   },
   {
     id: 33,

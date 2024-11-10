@@ -1,4 +1,15 @@
 import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "ӨӨРИЙН ТУХАЙ ТОВЧ | Бат-Ирээдүй",
+  description:
+    "МУИС-ийн Монгол судлалын сургуулийн багш, ОХУ-д хэл бичгийн шинжлэх ухааны доктор, эрдэмтэн Жанцангийн Бат-Ирээдvйн албан ёсны цахим хуудас",
+  keywords: "batireedui.com, www.batireedui.com",
+  icons: {
+    icon: "/images/favicon.ico",
+  },
+};
 
 export default function page() {
   return (

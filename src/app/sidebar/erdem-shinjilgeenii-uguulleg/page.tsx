@@ -42,7 +42,7 @@ export default function Page() {
         <div className="post_list">
           {currentPosts.map((post) => (
             <div key={post.id} className="post_intro">
-              <Link href="/">
+              <Link href={`/sidebar/erdem-shinjilgeenii-uguulleg/${post.id}`}>
                 {post.imageUrl && (
                   <Image
                     alt={post.title}
@@ -67,8 +67,6 @@ export default function Page() {
         count={Math.ceil(postList.length / postsPerPage)}
         page={currentPage}
         onChange={handleChange}
-        shape="rounded"
-        color="primary"
       />
     </div>
   );

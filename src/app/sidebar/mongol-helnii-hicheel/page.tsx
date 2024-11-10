@@ -67,8 +67,6 @@ export default function Page() {
         count={Math.ceil(postList.length / postsPerPage)}
         page={currentPage}
         onChange={handleChange}
-        shape="rounded"
-        color="primary"
       />
     </div>
   );

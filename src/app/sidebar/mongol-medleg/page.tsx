@@ -16,6 +16,7 @@ interface Post {
   content: string;
   post: string;
   category: string;
+  href: string;
 }
 
 export default function Page() {
@@ -42,7 +43,7 @@ export default function Page() {
         <div className="post_list">
           {currentPosts.map((post) => (
             <div key={post.id} className="post_intro">
-              <Link href="/">
+              <Link href={`/sidebar/mongol-medleg/${post.href}`}>
                 {post.imageUrl && (
                   <Image
                     alt={post.title}
@@ -67,8 +68,6 @@ export default function Page() {
         count={Math.ceil(postList.length / postsPerPage)}
         page={currentPage}
         onChange={handleChange}
-        shape="rounded"
-        color="primary"
       />
     </div>
   );
@@ -79,6 +78,7 @@ const postList: Post[] = [
     id: 1,
     imageUrl: "/images/thumb_sample.jpg",
     title: "ГИЙНГОО",
+    href: "giingoo",
     content:
       " Гийнгоо&nbsp;бол нарны бурхан Осор таринд наран дор, хөрст дэлхий дээр хурдан морион хүлэглэн морь хүүхэд хоёр амар амгалан өлзийтэй байхыг бэлгэдсэн уриа юм. Монголчуудын гийнгоо бол адууны тэнгэр Дамдин буюу ...",
     post: "Нийтэлсэн: 2012-04-03, 12:29",

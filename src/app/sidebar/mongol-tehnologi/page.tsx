@@ -16,6 +16,7 @@ interface Post {
   content: string;
   post: string;
   category: string;
+  href: string;
 }
 
 export default function Page() {
@@ -42,7 +43,7 @@ export default function Page() {
         <div className="post_list">
           {currentPosts.map((post) => (
             <div key={post.id} className="post_intro">
-              <Link href="/sidebar/mongol-tehnologi">
+              <Link href={post.href}>
                 {post.imageUrl && (
                   <Image
                     alt={post.title}
@@ -67,8 +68,6 @@ export default function Page() {
         count={Math.ceil(postList.length / postsPerPage)}
         page={currentPage}
         onChange={handleChange}
-        shape="rounded"
-        color="primary"
       />
     </div>
   );
@@ -79,6 +78,7 @@ const postList: Post[] = [
     id: 1,
     imageUrl: "/images/thumb_sample.jpg",
     title: "БОРЦ ХЭРХЭН ХИЙХ ВЭ?Г",
+    href: "/news/borts-herhen-hiih-we",
     content:
       "Саяхан монголчууд идэш хийлээ. Одоо махаа борцлохоор бэлтгэж байгаа байх. Борц бол нүүдэлчин монголчуудын бас нэг гол хүнс. Ялангуяа удаан хадгалах боломжтой учир гадаадад суугаа монголчууд нэлээд хэрэглэж байгаа харагддаг. ...",
     post: "Нийтэлсэн: 2012-04-03, 12:29",
@@ -88,6 +88,7 @@ const postList: Post[] = [
     id: 2,
     imageUrl: "/images/thumb_sample.jpg",
     title: "АЗАРГА ХЭРХЭН ТАВИХ ВЭ?",
+    href: "/news/azarga-herhen-tawih-we",
     content:
       "Азарга хэрхэн тавих вэ? Азарга тавихад монголчууд их анхаарч сайн үрээгээр азарга тавихыг хичээдэг. Яагаад гэвэл азарга бол адуун сүргийн манлай, адууг хамгаалагч юм. Азарга тавих үрээний шинж хэмээвээс, бие ...",
     post: "Нийтэлсэн: 2012-04-03, 12:29",
@@ -97,6 +98,7 @@ const postList: Post[] = [
     id: 3,
     imageUrl: "/images/sidebar/5268115055044818239_301_x_200.png",
     title: "Ж.БАТ-ИРЭЭДҮЙ: МОНГОЛ ЦАГ ",
+    href: "/news/mongol-tsag",
     content:
       "Тээр жил билээ. Монголч эрдэмтэдийн хэддүгээр ч билээ хурал болж салбар хуралдуунууд явж байлаа. Хэлшинжлэлийн салбар хуралдааныг монгол хэлтэй монхор Галсан гуайн хэлээр орос хэлтэй доктор Галсан гуай удирдаж байсан ...",
     post: "Нийтэлсэн: 2012-04-03, 12:29",
@@ -106,6 +108,7 @@ const postList: Post[] = [
     id: 4,
     imageUrl: "/images/thumb_sample.jpg",
     title: "УХНА ЯАЖ ТАВИХ ВЭ?",
+    href: "/news/uhna-yaj-tawih-we",
     content:
       "   Ухна яаж тавих вэ? Өсгөлөн, чийрэг, том биетэй, хошуу уртавтар, эвэр хэт шорон биш, үс сорлог, ноолуур арвин, зүс хар, хөх, улаан өнгийн бараандуу байх зэрэг арваад шинж бүрдсэн ишгээр ...",
     post: "Нийтэлсэн: 2012-04-03, 12:29",

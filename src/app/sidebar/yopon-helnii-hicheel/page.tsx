@@ -22,7 +22,7 @@ export default function Page() {
         <div className="post_list">
           {currentPosts.map((post) => (
             <div key={post.id} className="post_intro">
-              <Link href="/sidebar/yopon-helnii-hicheel">
+              <Link href="/sidebar/yopon-helnii-hicheel/1">
                 {post.imageUrl && (
                   <Image
                     alt={post.title}

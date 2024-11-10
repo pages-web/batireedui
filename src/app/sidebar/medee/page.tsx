@@ -1,13 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-
 import Pagination from "@mui/material/Pagination";
-
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 interface Post {
   id: number;
@@ -17,21 +14,27 @@ interface Post {
   post: string;
   category: string;
 }
+const postsPerPage = 10;
 
 export default function Page() {
-  const router = useRouter();
-
   const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(postList.length / postsPerPage);
 
-  const handleChange = (event: React.ChangeEvent<unknown>, newPage: number) => {
-    setCurrentPage(newPage);
-    router.push(`/sidebar/medee/?page=${newPage}`);
+  const startIndex = (currentPage - 1) * postsPerPage;
+  const currentPosts = postList.slice(startIndex, startIndex + postsPerPage);
+
+  useEffect(() => {
+    const savedPage = localStorage.getItem("currentPage");
+    if (savedPage) setCurrentPage(Number(savedPage));
+  }, []);
+
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    page: number
+  ) => {
+    setCurrentPage(page);
+    localStorage.setItem("currentPage", page.toString());
   };
-
-  const postsPerPage = 10;
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = postList.slice(indexOfFirstPost, indexOfLastPost);
   return (
     <div
       className="content"
@@ -42,7 +45,7 @@ export default function Page() {
         <div className="post_list">
           {currentPosts.map((post) => (
             <div key={post.id} className="post_intro">
-              <Link href="/">
+              <Link href={`/sidebar/medee/${post.id}`}>
                 {post.imageUrl && (
                   <Image
                     alt={post.title}
@@ -64,11 +67,9 @@ export default function Page() {
         </div>
       </div>
       <Pagination
-        count={Math.ceil(postList.length / postsPerPage)}
+        count={totalPages}
         page={currentPage}
-        onChange={handleChange}
-        shape="rounded"
-        color="primary"
+        onChange={handlePageChange}
       />
     </div>
   );
@@ -166,110 +167,111 @@ const postList: Post[] = [
   },
   {
     id: 11,
-    imageUrl: "/images/sidebar/2694311628150063074_301_x_200.png",
-    title: "Дэлхийн томоохон арлууд",
-    content:
-      "Арал хав.дөр.км 1. Грийнланд 2.176.000 2. Шинэ Гивениа                820.657 3. Борнео 743.254 4. Мадаксакар  ...",
-    post: "Нийтэлсэн: 2012-03-24, 19:11",
+    imageUrl: "/images/sidebar/11.jpg",
+    title: "Дэлхийн томоохон цөлүүд",
+
+    content: "",
+    post: "Нийтэлсэн: 2012-04-02, 14:11",
     category: "МЭДЭЭ МЭДЭЭЛЭЛ",
   },
   {
     id: 12,
-    imageUrl: "/images/sidebar/2694311628150063074_301_x_200.png",
-    title: "Дэлхийн томоохон арлууд",
-    content:
-      "Арал хав.дөр.км 1. Грийнланд 2.176.000 2. Шинэ Гивениа                820.657 3. Борнео 743.254 4. Мадаксакар  ...",
-    post: "Нийтэлсэн: 2012-03-24, 19:11",
+    imageUrl: "/images/sidebar/12.jpg",
+    title: "Дэлхийн хамгийн том газар нутагтай улсууд",
+
+    content: "",
+    post: "Нийтэлсэн: 2012-04-02, 14:09",
     category: "МЭДЭЭ МЭДЭЭЛЭЛ",
   },
   {
     id: 13,
-    imageUrl: "/images/sidebar/2694311628150063074_301_x_200.png",
-    title: "Дэлхийн томоохон арлууд",
-    content:
-      "Арал хав.дөр.км 1. Грийнланд 2.176.000 2. Шинэ Гивениа                820.657 3. Борнео 743.254 4. Мадаксакар  ...",
-    post: "Нийтэлсэн: 2012-03-24, 19:11",
+    imageUrl: "/images/sidebar/13.jpg",
+    title: "Дэлхийн хамгийн жижиг нутаг дэвсгэртэй улсууд",
+
+    content: "",
+    post: "Нийтэлсэн: 2012-04-02, 14:06",
     category: "МЭДЭЭ МЭДЭЭЛЭЛ",
   },
   {
     id: 14,
-    imageUrl: "/images/sidebar/2694311628150063074_301_x_200.png",
-    title: "Дэлхийн томоохон арлууд",
-    content:
-      "Арал хав.дөр.км 1. Грийнланд 2.176.000 2. Шинэ Гивениа                820.657 3. Борнео 743.254 4. Мадаксакар  ...",
-    post: "Нийтэлсэн: 2012-03-24, 19:11",
+    imageUrl: "/images/sidebar/14.jpg",
+    title: "Дэлхийн хамгийн их хүн амтай улсууд",
+
+    content: "",
+    post: "Нийтэлсэн: 2012-04-02, 14:02",
     category: "МЭДЭЭ МЭДЭЭЛЭЛ",
   },
   {
     id: 15,
-    imageUrl: "/images/sidebar/2694311628150063074_301_x_200.png",
-    title: "Дэлхийн томоохон арлууд",
-    content:
-      "Арал хав.дөр.км 1. Грийнланд 2.176.000 2. Шинэ Гивениа                820.657 3. Борнео 743.254 4. Мадаксакар  ...",
-    post: "Нийтэлсэн: 2012-03-24, 19:11",
+    imageUrl: "/images/sidebar/15.jpg",
+    title: "Дэлхийн хамгийн цөөн хүн амтай улсууд",
+
+    content: "",
+    post: "Нийтэлсэн: 2012-04-02, 13:59",
     category: "МЭДЭЭ МЭДЭЭЛЭЛ",
   },
   {
     id: 16,
-    imageUrl: "/images/sidebar/2694311628150063074_301_x_200.png",
-    title: "Дэлхийн томоохон арлууд",
-    content:
-      "Арал хав.дөр.км 1. Грийнланд 2.176.000 2. Шинэ Гивениа                820.657 3. Борнео 743.254 4. Мадаксакар  ...",
-    post: "Нийтэлсэн: 2012-03-24, 19:11",
+    imageUrl: "/images/sidebar/16.jpg",
+    title: "Нэг километрт хамгийн олон хүнтэй орнууд",
+
+    content: "",
+    post: "Нийтэлсэн: 2012-04-02, 13:57",
     category: "МЭДЭЭ МЭДЭЭЛЭЛ",
   },
   {
     id: 17,
-    imageUrl: "/images/sidebar/2694311628150063074_301_x_200.png",
-    title: "Дэлхийн томоохон арлууд",
-    content:
-      "Арал хав.дөр.км 1. Грийнланд 2.176.000 2. Шинэ Гивениа                820.657 3. Борнео 743.254 4. Мадаксакар  ...",
-    post: "Нийтэлсэн: 2012-03-24, 19:11",
-    category: "МЭДЭЭ МЭДЭЭЛЭЛ",
-  },
-  {
-    id: 17,
-    imageUrl: "/images/sidebar/2694311628150063074_301_x_200.png",
-    title: "Дэлхийн томоохон арлууд",
-    content:
-      "Арал хав.дөр.км 1. Грийнланд 2.176.000 2. Шинэ Гивениа                820.657 3. Борнео 743.254 4. Мадаксакар  ...",
-    post: "Нийтэлсэн: 2012-03-24, 19:11",
+    imageUrl: "/images/sidebar/17.jpg",
+    title: "Нэг километр талбайд хамгийн бага хүнтэй улсууд",
+
+    content: "",
+    post: "Нийтэлсэн: 2012-04-02, 13:53",
     category: "МЭДЭЭ МЭДЭЭЛЭЛ",
   },
   {
     id: 18,
-    imageUrl: "/images/sidebar/2694311628150063074_301_x_200.png",
-    title: "Дэлхийн томоохон арлууд",
-    content:
-      "Арал хав.дөр.км 1. Грийнланд 2.176.000 2. Шинэ Гивениа                820.657 3. Борнео 743.254 4. Мадаксакар  ...",
-    post: "Нийтэлсэн: 2012-03-24, 19:11",
+    imageUrl: "/images/sidebar/20.jpg",
+    title: "Дэлхийн гол хэлнүүд",
+
+    content: "",
+    post: "Нийтэлсэн: 2012-04-02, 13:52",
     category: "МЭДЭЭ МЭДЭЭЛЭЛ",
   },
   {
     id: 19,
-    imageUrl: "/images/sidebar/2694311628150063074_301_x_200.png",
-    title: "Дэлхийн томоохон арлууд",
-    content:
-      "Арал хав.дөр.км 1. Грийнланд 2.176.000 2. Шинэ Гивениа                820.657 3. Борнео 743.254 4. Мадаксакар  ...",
-    post: "Нийтэлсэн: 2012-03-24, 19:11",
+    imageUrl: "/images/sidebar/21.jpg",
+    title: "Ж.Бат-Ирээдүй: АВСТРАЛИД МОНГОЛ СУДЛАЛ ХӨГЖИНӨ",
+
+    content: "",
+    post: "Нийтэлсэн: 2012-02-29, 12:16",
     category: "МЭДЭЭ МЭДЭЭЛЭЛ",
   },
   {
     id: 20,
-    imageUrl: "/images/sidebar/2694311628150063074_301_x_200.png",
-    title: "Дэлхийн томоохон арлууд",
-    content:
-      "Арал хав.дөр.км 1. Грийнланд 2.176.000 2. Шинэ Гивениа                820.657 3. Борнео 743.254 4. Мадаксакар  ...",
-    post: "Нийтэлсэн: 2012-03-24, 19:11",
+    imageUrl: "/images/sidebar/18.jpg",
+    title:
+      "2011 ОНЫ 11 САРЫН 16-НЫ 11:30 Д УРАН ЗУРГИЙН ГАЛЛЕРЕЙД МӨНХ ТЭНГЭРИЙН БИЧИГ УРАН ЗУРГИЙН ҮЗЭСГЭЛЭН НЭЭГДЭНЭ",
+
+    content: "",
+    post: "Нийтэлсэн: 2011-11-15, 13:26",
     category: "МЭДЭЭ МЭДЭЭЛЭЛ",
   },
   {
     id: 21,
-    imageUrl: "/images/sidebar/2694311628150063074_301_x_200.png",
-    title: "Дэлхийн томоохон арлууд",
-    content:
-      "Арал хав.дөр.км 1. Грийнланд 2.176.000 2. Шинэ Гивениа                820.657 3. Борнео 743.254 4. Мадаксакар  ...",
-    post: "Нийтэлсэн: 2012-03-24, 19:11",
+    imageUrl: "/images/sidebar/23.jpg",
+    title: "Эмчилгээний виз олгоно",
+
+    content: "",
+    post: "Нийтэлсэн: 2011-01-31, 13:15",
+    category: "МЭДЭЭ МЭДЭЭЛЭЛ",
+  },
+  {
+    id: 22,
+    imageUrl: "/images/sidebar/24.jpg",
+    title: "Алтан гадас чигийг заана",
+
+    content: "",
+    post: "Нийтэлсэн: 2009-12-20, 11:35",
     category: "МЭДЭЭ МЭДЭЭЛЭЛ",
   },
 ];

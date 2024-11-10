@@ -16,6 +16,7 @@ interface Post {
   content: string;
   post: string;
   category: string;
+  href: string;
 }
 
 export default function Page() {
@@ -42,7 +43,7 @@ export default function Page() {
         <div className="post_list">
           {currentPosts.map((post) => (
             <div key={post.id} className="post_intro">
-              <Link href="/">
+              <Link href={post.href}>
                 {post.imageUrl && (
                   <Image
                     alt={post.title}
@@ -67,8 +68,6 @@ export default function Page() {
         count={Math.ceil(postList.length / postsPerPage)}
         page={currentPage}
         onChange={handleChange}
-        shape="rounded"
-        color="primary"
       />
     </div>
   );
@@ -78,9 +77,11 @@ const postList: Post[] = [
   {
     id: 1,
     imageUrl: "/images/thumb_sample.jpg",
-    title: "Монгол мал тамгалах ёс ба орчин үе",
-    content: "",
-    post: "Нийтэлсэн: 2012-04-03, 12:29",
+    title: "МОНГОЛ ДААЛУУНЫ ГУНШИН",
+    href: "/news/mongol-daaluunii-gunshin",
+    content:
+      "ЁОЗ: Ёгзолдоржийн хөдөөнөөс Ёнзон хамбын гадаанаас Цайны сүүний гуйлгачин Цалам барьсан дээрэмчин Хон хэрээний нүд Хоёр нүдний дуран Хойт хотын данжаад БӨХӨӨН: Өөхий бөөхий дөрөв Өвчүү номин шаргал Бөгжөө Сэнгийн ...",
+    post: "ННийтэлсэн: 2012-02-19, 08:38",
     category: "МОНГОЛ АМАН СОЁЛ",
   },
 ];
